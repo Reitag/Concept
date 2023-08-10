@@ -4,7 +4,7 @@
 #include <string>
 
 template <typename T>
-concept ComplexConcept = std::has_virtual_destructor<T>::value && requires(const T v)
+concept ComplexConcept = !std::has_virtual_destructor<T>::value && requires(const T v)
 {
     {v.hash()} -> std::convertible_to<long>;
     {v.toString()} -> std::same_as<std::string>;
@@ -19,7 +19,7 @@ struct Value
 
     }
 
-    virtual ~Value()
+    ~Value()
     {
 
     }
